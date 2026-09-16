@@ -1,0 +1,74 @@
+scoring 5000 charts across 3 arms
+
+  5000 scored, 0 failed, 107.5s, p50 336ms, 8675046 input tokens
+
+  5000 scored, 0 failed, 106.2s, p50 334ms, 8781045 input tokens
+
+  5000 scored, 0 failed, 105.9s, p50 334ms, 8675046 input tokens
+
+========================================================================
+WHAT IS EVEN FINDABLE HERE
+Mechanical baselines on the same sample. These are the known
+price anomalies, and they are the bar, not zero.
+========================================================================
+                                 seen (2022-23)       recent (2025-26)
+  1-day reversal         +0.0246 [-0.019,+0.068] +0.0255 [-0.027,+0.074]
+  5-day reversal         +0.0277 [-0.019,+0.074] +0.0082 [-0.042,+0.056]
+  12-1 momentum          +0.0104 [-0.033,+0.055] +0.0321 [-0.019,+0.084]
+  20-day volatility      -0.0024 [-0.053,+0.047] +0.0232 [-0.025,+0.071]
+
+  smallest IC separable from zero: 0.0560 per era (n=2500), 0.0396 pooled (n=5000)
+
+========================================================================
+WHAT THE MODEL ANSWERED
+========================================================================
+
+  blind      n=5000  p50 336ms  8675046 input tokens
+    labels      up 5.3%, down 12.3%, flat 82.4%
+    tilt        mean -0.050, sd 0.210
+    stretched   mean 0.44, sd 0.06
+    stretched vs size of the last move: rank corr +0.335
+
+  named      n=5000  p50 334ms  8781045 input tokens
+    labels      up 5.2%, down 12.4%, flat 82.4%
+    tilt        mean -0.054, sd 0.212
+    stretched   mean 0.44, sd 0.06
+    stretched vs size of the last move: rank corr +0.362
+
+  scrambled  n=5000  p50 334ms  8675046 input tokens
+    labels      up 5.2%, down 11.6%, flat 83.2%
+    tilt        mean -0.053, sd 0.211
+    stretched   mean 0.44, sd 0.06
+    stretched vs size of the last move: rank corr +0.155
+
+========================================================================
+CAN IT READ THE CHART?
+rank IC of its up-minus-down tilt against the next day's
+excess return. Entry at the day 0 close, so this is tradeable.
+========================================================================
+                         seen (2022-23)         recent (2025-26)
+  blind        -0.0205 [-0.064,+0.023] flat  -0.0250 [-0.069,+0.020] flat 
+  named        -0.0102 [-0.053,+0.033] flat  -0.0243 [-0.068,+0.020] flat 
+  scrambled    +0.0224 [-0.020,+0.064] flat  -0.0313 [-0.071,+0.010] flat 
+
+========================================================================
+POOLED, AND WHAT IT WOULD HAVE PAID
+========================================================================
+
+  blind  n=5000
+    rank IC     -0.0226 [-0.0537, +0.0070]  flat
+    long-short  -13.9 bps gross, -33.9 bps net  [-52.8, -16.5]  SIGNIFICANT
+    hit rate    48.3%
+
+  named  n=5000
+    rank IC     -0.0173 [-0.0481, +0.0126]  flat
+    long-short  -11.7 bps gross, -31.7 bps net  [-50.1, -13.5]  SIGNIFICANT
+    hit rate    48.7%
+
+  scrambled  n=5000
+    rank IC     -0.0063 [-0.0361, +0.0227]  flat
+    long-short  -0.1 bps gross, -20.1 bps net  [-36.8, -2.7]  SIGNIFICANT
+    hit rate    50.5%
+
+========================================================================
+cost assumption: 10 bps round trip per leg, 20 bps for the pair

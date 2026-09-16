@@ -3,7 +3,11 @@
 Does [Jev](https://typesafe.ai), TypeSafe's System One model, predict stock
 returns from financial news? Built on [jev-go](https://github.com/Gaurav-Gosain/jev-go).
 
-**Short answer: it reads the news well, and there is no money in it.**
+**Short answer: it reads the news well, it cannot read a chart, and there is no
+money in either.**
+
+Two studies. The first gives it news headlines. The second gives it price
+candles and no news at all.
 
 On the day a headline is published, Jev's bullish-minus-bearish tilt has a rank
 IC of **+0.24** against that day's move. By the time you can actually trade on
@@ -110,13 +114,81 @@ The first version of this placebo ran ts_-3 → ts_-1 and scored **+0.21**. That
 window spans the publication day, so it was not a placebo at all. Finding that
 is what located the timing issue above.
 
+## Study 2: candles only, no news
+
+`cmd/jev-candles`. Thirty daily candles in, next day's move out. Prices are
+rescaled so the first close is 100 and volume is a multiple of its own median,
+which removes the level: the strongest cue for identifying which stock and which
+year this is. 5,000 stock-days, three arms, 15,000 requests.
+
+This is a cleaner trading test than the news study. A chart is fully known at
+the close of day 0 and the trade is day 0 close to day 1 close, so there is no
+question about whether the information was available in time.
+
+### It says "I don't know", and it is right to
+
+```
+labels      up 5.3%, down 12.3%, flat 82.4%
+```
+
+It declines to call direction on more than four charts in five. That is the
+correct answer, and a model that guessed a direction every time would be worse
+calibrated, not better.
+
+### It is genuinely reading the chart
+
+The battery also asks whether the recent move looks overextended. That answer
+correlates **+0.335** with the size of the last move, and only **+0.155** on the
+scrambled arm where the daily returns have been shuffled into a random order. So
+the model is looking at the data and understands the question. It is not
+ignoring the input and defaulting to flat.
+
+### The direction call is still worthless
+
+| arm | seen (2022-23) | recent (2025-26) | pooled | net of cost |
+| --- | --- | --- | --- | --- |
+| blind | -0.0205 | -0.0250 | -0.0226 | **-33.9 bps** |
+| named (ticker + date) | -0.0102 | -0.0243 | -0.0173 | -31.7 bps |
+| **scrambled** | +0.0224 | -0.0313 | -0.0063 | -20.1 bps |
+
+Every cell is indistinguishable from zero, and the long-short loses money in all
+three. The line that matters is the last one: **shuffling the candles into a
+random order changes nothing.** If the shape carried the signal, destroying the
+shape would destroy the signal. It does not, so there was no signal in the shape.
+
+No era effect either, which is the same conclusion the news study reached by a
+different route: 2022-23 and 2025-26 score the same, so nothing is being
+recalled.
+
+### What was even findable
+
+| baseline | seen | recent |
+| --- | --- | --- |
+| 1-day reversal | +0.0246 | +0.0255 |
+| 5-day reversal | +0.0277 | +0.0082 |
+| 12-1 momentum | +0.0104 | +0.0321 |
+
+The real, documented price anomalies sit at about **+0.02** on this sample, below
+the 0.056 an era of 2,500 can separate from zero. So this study rules out Jev
+having a *large* chart-reading edge. It cannot resolve a small one, and neither
+can it resolve the known anomalies. Any claim that a model "beats technical
+analysis" at this sample size is claiming more than the data supports.
+
 ## Reproducing
 
 ```bash
 export TYPESAFE_API_KEY=...
-uv run --with pandas --with pyarrow python data/prep3.py 5000   # build the event set
-go run ./cmd/jev-alpha -run -events data/events3.json           # 15,000 requests, ~5.5 min
-go run ./cmd/jev-alpha -events data/events3.json                # re-score without the API
+
+# study 1, news
+uv run --with pandas --with pyarrow python data/prep3.py 5000
+go run ./cmd/jev-alpha -run -events data/events3.json    # 15,000 requests, ~5.5 min
+go run ./cmd/jev-alpha -events data/events3.json         # re-score without the API
+
+# study 2, candles
+uv run --with pandas --with numpy python data/prep_candles.py 2500
+go run ./cmd/jev-candles -run                            # 15,000 requests, ~5.5 min
+go run ./cmd/jev-candles                                 # re-score without the API
+
 go test ./...
 ```
 
@@ -125,10 +197,14 @@ the API. Redefining a window does not change what the model answered, so a fix
 costs nothing to apply.
 
 ```
-cmd/jev-alpha        runner and report
+cmd/jev-alpha        news study runner and report
+cmd/jev-candles      candle study runner and report
 internal/study       arms, battery, scoring, bootstrap, portfolio
-data/prep3.py        event construction, the file to argue with
-results/             per-event output for all three arms
+internal/candles     chart rendering, arms, battery
+data/prep3.py        news event construction, the file to argue with
+data/prep_candles.py chart event construction
+results/             news study, per-event output for all three arms
+results-candles/     candle study, same
 ```
 
 `internal/study/stats_test.go` plants a known IC of 0.10 and checks the
