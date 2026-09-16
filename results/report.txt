@@ -1,0 +1,153 @@
+
+========================================================================
+WHAT THE MODEL ANSWERED
+========================================================================
+
+  named  (n=5000, p50 340ms)
+    labels         bullish 42.1%, bearish 26.3%, neutral 31.5%
+    tilt           mean +0.132, sd 0.675
+    magnitude      mean 0.90 / 3, sd 0.51
+    priced in      mean 0.51, sd 0.15
+
+  blind  (n=5000, p50 335ms)
+    labels         bullish 52.8%, bearish 30.3%, neutral 16.9%
+    tilt           mean +0.182, sd 0.757
+    magnitude      mean 1.26 / 3, sd 0.56
+    priced in      mean 0.45, sd 0.14
+
+  wrong  (n=5000, p50 333ms)
+    labels         bullish 22.4%, bearish 14.4%, neutral 63.2%
+    tilt           mean +0.056, sd 0.495
+    magnitude      mean 0.57 / 3, sd 0.55
+    priced in      mean 0.49, sd 0.16
+
+  named and blind agree on the label for 74.3% of events, signal rank correlation 0.778
+  named and wrong agree on the label for 62.5% of events, signal rank correlation 0.757
+
+========================================================================
+PLACEBOS  windows the headline cannot possibly inform.
+These must be flat, or the plumbing is wrong.
+========================================================================
+  named  placebo/pre    IC +0.0293 [-0.0006, +0.0601]  flat
+  blind  placebo/pre    IC +0.0253 [-0.0040, +0.0550]  flat
+  wrong  placebo/pre    IC +0.0172 [-0.0118, +0.0466]  flat
+  named  placebo/far    IC +0.0057 [-0.0236, +0.0365]  flat
+  blind  placebo/far    IC +0.0111 [-0.0176, +0.0404]  flat
+  wrong  placebo/far    IC +0.0104 [-0.0176, +0.0390]  flat
+
+========================================================================
+WHERE THE NEWS GETS PRICED  neither window is tradeable.
+pubday is ts_-2 to ts_-1, which prices intraday news.
+reaction is ts_-1 to ts_0, which prices after-close news.
+Together these ask whether it reads the news at all.
+========================================================================
+  named  pubday     IC +0.2374 [+0.2080, +0.2657]  net +138.4 bps  SIGNIFICANT
+  blind  pubday     IC +0.2075 [+0.1780, +0.2371]  net +125.7 bps  SIGNIFICANT
+  wrong  pubday     IC +0.1720 [+0.1419, +0.2007]  net +91.2 bps  SIGNIFICANT
+  named  reaction   IC +0.0615 [+0.0338, +0.0885]  net +35.7 bps  SIGNIFICANT
+  blind  reaction   IC +0.0614 [+0.0334, +0.0905]  net +34.2 bps  SIGNIFICANT
+  wrong  reaction   IC +0.0535 [+0.0261, +0.0804]  net +23.1 bps  SIGNIFICANT
+
+========================================================================
+DOES IT NEED TO KNOW THE COMPANY?
+reaction window, only headlines that named their subject.
+If naming the company is doing the work, named beats blind.
+========================================================================
+  named  IC +0.0998 [+0.0625, +0.1361]  n=2486  SIGNIFICANT
+  blind  IC +0.0990 [+0.0626, +0.1357]  n=2486  SIGNIFICANT
+  wrong  IC +0.0972 [+0.0613, +0.1325]  n=2486  SIGNIFICANT
+
+========================================================================
+IS IT JUST READING THE MOVE OFF THE HEADLINE?
+A headline saying "slumps as ..." can be scored with no judgment.
+Dropping those is the test of whether anything is left.
+========================================================================
+  named  pubday    all +0.2374  ->  no move word +0.1306 [+0.0970, +0.1619]  n=3750  SIGNIFICANT
+  blind  pubday    all +0.2075  ->  no move word +0.1168 [+0.0831, +0.1497]  n=3750  SIGNIFICANT
+  wrong  pubday    all +0.1720  ->  no move word +0.0888 [+0.0548, +0.1205]  n=3750  SIGNIFICANT
+  named  reaction  all +0.0615  ->  no move word +0.0539 [+0.0214, +0.0867]  n=3750  SIGNIFICANT
+  blind  reaction  all +0.0614  ->  no move word +0.0580 [+0.0246, +0.0922]  n=3750  SIGNIFICANT
+  wrong  reaction  all +0.0535  ->  no move word +0.0548 [+0.0224, +0.0871]  n=3750  SIGNIFICANT
+
+========================================================================
+TRADEABLE  entry at the ts_0 close, a full close after the
+reaction. This is the money question.
+========================================================================
+
+  NAMED / tilt / drift1   n=5000
+    rank IC        -0.0083  [-0.0377, +0.0214]  p=0.589 not distinguishable from zero
+    null IC        -0.0037  [-0.0312, +0.0234]  (shuffled signal)
+    detectable     0.0396   smallest IC this n could separate from zero
+    long-short     +1.6 bps gross, -18.4 bps net of cost
+                   [-37.0 bps, -0.7 bps] net, p=0.043 SIGNIFICANT
+    legs           long +3.9 bps (n=1666), short +2.3 bps (n=1666), hit rate 49.5%
+
+  BLIND / tilt / drift1   n=5000
+    rank IC        -0.0126  [-0.0438, +0.0189]  p=0.421 not distinguishable from zero
+    null IC        -0.0040  [-0.0317, +0.0234]  (shuffled signal)
+    detectable     0.0396   smallest IC this n could separate from zero
+    long-short     -5.7 bps gross, -25.7 bps net of cost
+                   [-43.8 bps, -7.9 bps] net, p=0.004 SIGNIFICANT
+    legs           long -3.2 bps (n=1666), short +2.6 bps (n=1666), hit rate 49.5%
+
+  WRONG / tilt / drift1   n=5000
+    rank IC        -0.0049  [-0.0351, +0.0245]  p=0.758 not distinguishable from zero
+    null IC        -0.0054  [-0.0328, +0.0222]  (shuffled signal)
+    detectable     0.0396   smallest IC this n could separate from zero
+    long-short     +2.8 bps gross, -17.2 bps net of cost
+                   [-34.9 bps, -0.8 bps] net, p=0.044 SIGNIFICANT
+    legs           long +2.3 bps (n=1666), short -0.5 bps (n=1666), hit rate 50.0%
+
+========================================================================
+NAMED vs BLIND   tilt / drift1
+========================================================================
+                          named          blind
+  rank IC               -0.0083        -0.0126
+  95% low               -0.0377        -0.0438
+  95% high              +0.0214        +0.0189
+  long-short net      -18.4 bps      -25.7 bps
+
+  difference in IC: +0.0043
+
+========================================================================
+EVERYTHING ELSE, EXPLORATORY
+Each extra cell is another chance to find a pattern by
+looking enough times. Read them that way.
+========================================================================
+  named  tilt         drift5             IC -0.0119 [-0.0439, +0.0203]  net -34.1 bps  flat
+  blind  tilt         drift5             IC -0.0169 [-0.0488, +0.0148]  net -31.9 bps  flat
+  wrong  tilt         drift5             IC -0.0049 [-0.0354, +0.0258]  net -25.6 bps  flat
+  named  tilt         pubday/demeaned    IC +0.2031 [+0.1743, +0.2312]  net +114.7 bps  SIGNIFICANT
+  blind  tilt         pubday/demeaned    IC +0.1690 [+0.1395, +0.1981]  net +102.3 bps  SIGNIFICANT
+  wrong  tilt         pubday/demeaned    IC +0.1428 [+0.1134, +0.1706]  net +72.9 bps  SIGNIFICANT
+  named  tilt         reaction/demeaned  IC +0.0587 [+0.0337, +0.0840]  net +30.7 bps  SIGNIFICANT
+  blind  tilt         reaction/demeaned  IC +0.0477 [+0.0214, +0.0744]  net +24.2 bps  SIGNIFICANT
+  wrong  tilt         reaction/demeaned  IC +0.0567 [+0.0309, +0.0821]  net +24.3 bps  SIGNIFICANT
+  named  tilt         drift1/demeaned    IC -0.0176 [-0.0460, +0.0105]  net -22.2 bps  flat
+  blind  tilt         drift1/demeaned    IC -0.0113 [-0.0396, +0.0170]  net -25.3 bps  flat
+  wrong  tilt         drift1/demeaned    IC -0.0090 [-0.0382, +0.0205]  net -18.9 bps  flat
+  named  conviction   drift5             IC -0.0129 [-0.0450, +0.0197]  net -32.6 bps  flat
+  blind  conviction   drift5             IC -0.0149 [-0.0463, +0.0175]  net -32.2 bps  flat
+  wrong  conviction   drift5             IC -0.0061 [-0.0365, +0.0244]  net -23.5 bps  flat
+  named  conviction   pubday/demeaned    IC +0.2014 [+0.1726, +0.2290]  net +115.7 bps  SIGNIFICANT
+  blind  conviction   pubday/demeaned    IC +0.1767 [+0.1478, +0.2053]  net +106.0 bps  SIGNIFICANT
+  wrong  conviction   pubday/demeaned    IC +0.1441 [+0.1149, +0.1720]  net +76.9 bps  SIGNIFICANT
+  named  conviction   reaction/demeaned  IC +0.0514 [+0.0257, +0.0780]  net +25.4 bps  SIGNIFICANT
+  blind  conviction   reaction/demeaned  IC +0.0356 [+0.0093, +0.0628]  net +22.6 bps  SIGNIFICANT
+  wrong  conviction   reaction/demeaned  IC +0.0525 [+0.0262, +0.0782]  net +23.0 bps  SIGNIFICANT
+  named  conviction   drift1/demeaned    IC -0.0240 [-0.0525, +0.0039]  net -26.5 bps  flat
+  blind  conviction   drift1/demeaned    IC -0.0123 [-0.0410, +0.0166]  net -25.2 bps  flat
+  wrong  conviction   drift1/demeaned    IC -0.0107 [-0.0401, +0.0187]  net -16.7 bps  flat
+
+========================================================================
+BY YEAR  reaction window, primary signal
+========================================================================
+  named  2022  IC +0.0584 [+0.0229, +0.0949]  n=2837
+  named  2023  IC +0.0688 [+0.0220, +0.1129]  n=2163
+  blind  2022  IC +0.0560 [+0.0181, +0.0944]  n=2837
+  blind  2023  IC +0.0717 [+0.0273, +0.1129]  n=2163
+  wrong  2022  IC +0.0579 [+0.0231, +0.0946]  n=2837
+  wrong  2023  IC +0.0499 [+0.0094, +0.0902]  n=2163
+
+========================================================================
+cost assumption: 10 bps round trip per leg, 20 bps for the pair

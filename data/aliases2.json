@@ -1,0 +1,273 @@
+{
+ "GOOGL": {
+  "names": [
+   "Google",
+   "Alphabet"
+  ],
+  "products": [
+   "YouTube",
+   "Waymo"
+  ]
+ },
+ "GOOG": {
+  "names": [
+   "Google",
+   "Alphabet"
+  ],
+  "products": [
+   "YouTube",
+   "Waymo"
+  ]
+ },
+ "META": {
+  "names": [
+   "Facebook"
+  ],
+  "products": [
+   "Instagram",
+   "WhatsApp"
+  ]
+ },
+ "WBD": {
+  "names": [
+   "Warner Bros",
+   "Warner Brothers"
+  ],
+  "products": [
+   "HBO"
+  ]
+ },
+ "GEHC": {
+  "names": [
+   "GE HealthCare",
+   "GE Healthcare"
+  ],
+  "products": []
+ },
+ "KDP": {
+  "names": [
+   "Keurig",
+   "Dr Pepper",
+   "Dr. Pepper"
+  ],
+  "products": []
+ },
+ "PDD": {
+  "names": [
+   "Pinduoduo",
+   "Temu"
+  ],
+  "products": []
+ },
+ "JD": {
+  "names": [
+   "JD.com"
+  ],
+  "products": []
+ },
+ "BKNG": {
+  "names": [
+   "Booking.com",
+   "Priceline"
+  ],
+  "products": []
+ },
+ "ABNB": {
+  "names": [
+   "Airbnb"
+  ],
+  "products": []
+ },
+ "LCID": {
+  "names": [
+   "Lucid"
+  ],
+  "products": []
+ },
+ "SIRI": {
+  "names": [
+   "SiriusXM",
+   "Sirius XM"
+  ],
+  "products": []
+ },
+ "TMUS": {
+  "names": [
+   "T-Mobile",
+   "TMobile"
+  ],
+  "products": []
+ },
+ "CMCSA": {
+  "names": [
+   "Comcast",
+   "NBCUniversal"
+  ],
+  "products": [
+   "NBC",
+   "Xfinity",
+   "Peacock"
+  ]
+ },
+ "MDLZ": {
+  "names": [
+   "Mondelez"
+  ],
+  "products": []
+ },
+ "KHC": {
+  "names": [
+   "Kraft Heinz"
+  ],
+  "products": []
+ },
+ "AMD": {
+  "names": [
+   "Advanced Micro Devices"
+  ],
+  "products": []
+ },
+ "TSLA": {
+  "names": [
+   "Tesla"
+  ],
+  "products": []
+ },
+ "AMZN": {
+  "names": [
+   "Amazon"
+  ],
+  "products": [
+   "AWS"
+  ]
+ },
+ "NFLX": {
+  "names": [
+   "Netflix"
+  ],
+  "products": []
+ },
+ "MSFT": {
+  "names": [
+   "Microsoft"
+  ],
+  "products": [
+   "Azure",
+   "Xbox"
+  ]
+ },
+ "AAPL": {
+  "names": [
+   "Apple"
+  ],
+  "products": [
+   "iPhone",
+   "iPad",
+   "Mac"
+  ]
+ },
+ "NVDA": {
+  "names": [
+   "Nvidia",
+   "NVIDIA"
+  ],
+  "products": []
+ },
+ "INTC": {
+  "names": [
+   "Intel"
+  ],
+  "products": []
+ },
+ "PYPL": {
+  "names": [
+   "PayPal"
+  ],
+  "products": [
+   "Venmo"
+  ]
+ },
+ "SBUX": {
+  "names": [
+   "Starbucks"
+  ],
+  "products": []
+ },
+ "COST": {
+  "names": [
+   "Costco"
+  ],
+  "products": []
+ },
+ "PEP": {
+  "names": [
+   "PepsiCo"
+  ],
+  "products": [
+   "Frito-Lay"
+  ]
+ },
+ "ASML": {
+  "names": [
+   "ASML"
+  ],
+  "products": []
+ },
+ "AZN": {
+  "names": [
+   "AstraZeneca"
+  ],
+  "products": []
+ },
+ "MRNA": {
+  "names": [
+   "Moderna"
+  ],
+  "products": []
+ },
+ "ZM": {
+  "names": [
+   "Zoom"
+  ],
+  "products": []
+ },
+ "TEAM": {
+  "names": [
+   "Atlassian"
+  ],
+  "products": [
+   "Jira"
+  ]
+ },
+ "TTD": {
+  "names": [
+   "Trade Desk"
+  ],
+  "products": []
+ },
+ "WDAY": {
+  "names": [
+   "Workday"
+  ],
+  "products": []
+ },
+ "CHTR": {
+  "names": [],
+  "products": [
+   "Spectrum"
+  ]
+ },
+ "EA": {
+  "names": [
+   "Electronic Arts"
+  ],
+  "products": []
+ },
+ "MELI": {
+  "names": [
+   "MercadoLibre",
+   "Mercado Libre"
+  ],
+  "products": []
+ }
+}
